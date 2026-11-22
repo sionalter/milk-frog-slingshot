@@ -1,0 +1,29 @@
+{
+  "name": "milk-frog-slingshot",
+  "private": true,
+  "version": "1.0.0",
+  "description": "奶蛙弹射 - a hand-drawn Angry Birds style slingshot game built with TypeScript, Canvas and Matter.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "game",
+    "typescript",
+    "canvas",
+    "matter-js",
+    "angry-birds"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "matter-js": "^0.20.0"
+  },
+  "devDependencies": {
+    "@types/matter-js": "^0.20.2",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8"
+  }
+}

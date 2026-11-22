@@ -1,0 +1,116 @@
+import type { BlockDef, EnemyDef, LevelDef, Material } from './types';
+
+const block = (x: number, bottom: number, w: number, h: number, material: Material, angle = 0): BlockDef => ({
+  x,
+  y: bottom - h / 2,
+  w,
+  h,
+  material,
+  angle,
+});
+
+const enemy = (x: number, bottom: number, r = 24): EnemyDef => ({
+  x,
+  y: bottom - r - 1,
+  r,
+});
+
+export const LEVELS: LevelDef[] = [
+  {
+    id: 1,
+    name: '奶香草地',
+    tagline: '初来乍到，先来一发！',
+    accent: '#9ed18f',
+    ammo: ['cream', 'cream', 'matcha'],
+    blocks: [
+      block(900, 640, 26, 120, 'wood'),
+      block(1000, 640, 26, 120, 'wood'),
+      block(950, 520, 200, 26, 'wood'),
+      block(918, 494, 20, 66, 'wood'),
+      block(982, 494, 20, 66, 'wood'),
+      block(950, 428, 170, 22, 'wood'),
+      block(1090, 640, 22, 100, 'glass'),
+      block(1140, 640, 64, 64, 'wood'),
+    ],
+    enemies: [enemy(950, 640), enemy(950, 406)],
+    star2: 2500,
+    star3: 3400,
+  },
+  {
+    id: 2,
+    name: '抹茶庭院',
+    tagline: '玻璃房子可经不起折腾。',
+    accent: '#8cc9a3',
+    ammo: ['cream', 'matcha', 'strawberry', 'cream'],
+    blocks: [
+      block(880, 640, 36, 110, 'stone'),
+      block(1030, 640, 36, 110, 'stone'),
+      block(955, 530, 220, 26, 'wood'),
+      block(900, 504, 22, 96, 'glass'),
+      block(1010, 504, 22, 96, 'glass'),
+      block(955, 408, 230, 24, 'wood'),
+      block(1150, 640, 90, 70, 'stone'),
+    ],
+    enemies: [enemy(955, 640), enemy(955, 504), enemy(955, 384), enemy(1150, 570)],
+    star2: 3800,
+    star3: 5000,
+  },
+  {
+    id: 3,
+    name: '草莓城堡',
+    tagline: '高塔上的黑糖蛙正在偷笑。',
+    accent: '#eaa6b7',
+    ammo: ['matcha', 'strawberry', 'cream', 'strawberry', 'cream'],
+    blocks: [
+      block(860, 640, 40, 140, 'stone'),
+      block(1070, 640, 40, 140, 'stone'),
+      block(965, 500, 260, 28, 'wood'),
+      block(905, 472, 24, 100, 'glass'),
+      block(1025, 472, 24, 100, 'glass'),
+      block(965, 372, 240, 26, 'wood'),
+      block(925, 346, 50, 50, 'stone'),
+      block(1005, 346, 50, 50, 'stone'),
+      block(1170, 640, 44, 120, 'stone'),
+      block(1170, 520, 140, 24, 'wood'),
+    ],
+    enemies: [
+      enemy(965, 640),
+      enemy(965, 472),
+      enemy(925, 296),
+      enemy(1005, 296),
+      enemy(1170, 496, 22),
+    ],
+    star2: 6000,
+    star3: 7400,
+  },
+  {
+    id: 4,
+    name: '热可可高塔',
+    tagline: '终极防线，把奶力拉满！',
+    accent: '#d8ae8a',
+    ammo: ['cream', 'matcha', 'strawberry', 'cream', 'matcha', 'strawberry', 'cream'],
+    blocks: [
+      block(940, 640, 40, 120, 'stone'),
+      block(1060, 640, 40, 120, 'stone'),
+      block(1000, 520, 190, 26, 'wood'),
+      block(950, 494, 22, 90, 'glass'),
+      block(1050, 494, 22, 90, 'glass'),
+      block(1000, 404, 180, 24, 'wood'),
+      block(1000, 380, 90, 50, 'stone'),
+      block(800, 640, 120, 80, 'stone'),
+      block(1200, 640, 120, 80, 'stone'),
+    ],
+    enemies: [
+      enemy(1000, 640),
+      enemy(1000, 494),
+      enemy(935, 380, 20),
+      enemy(1065, 380, 20),
+      enemy(800, 560),
+      enemy(1200, 560),
+    ],
+    star2: 7000,
+    star3: 8600,
+  },
+];
+
+export const LEVEL_COUNT = LEVELS.length;
