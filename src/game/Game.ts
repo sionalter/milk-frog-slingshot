@@ -740,7 +740,7 @@ export class Game {
     if (bonus > 0) {
       this.score += bonus;
       this.callbacks.onScore(Math.round(this.score));
-      this.effects.text(WORLD_WIDTH / 2, 300, `剩余奶蛙 +${bonus}`, '#FFE49A', 32);
+      this.effects.text(WORLD_WIDTH / 2, 300, `剩余奶娃 +${bonus}`, '#FFE49A', 32);
     }
     const stars = this.score >= this.level.star3 ? 3 : this.score >= this.level.star2 ? 2 : 1;
     this.pendingWin = false;

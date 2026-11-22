@@ -72,7 +72,275 @@ export interface FrogOptions {
   alpha?: number;
 }
 
+type BabyLook = Exclude<FrogLook, 'choco'>;
+
+interface BabyPalette {
+  body: string;
+  shade: string;
+  belly: string;
+  line: string;
+  hand: string;
+}
+
+const BABY_PALETTES: Record<BabyLook, BabyPalette> = {
+  cream: {
+    body: '#FFD83D',
+    shade: '#EFB72A',
+    belly: '#F4E6C6',
+    line: '#7A5A22',
+    hand: '#6C6250',
+  },
+  matcha: {
+    body: '#D5EB8C',
+    shade: '#B4CE66',
+    belly: '#F5EDC9',
+    line: '#5E6A32',
+    hand: '#64644B',
+  },
+  strawberry: {
+    body: '#FFC3D1',
+    shade: '#EE9CB2',
+    belly: '#FFF1E3',
+    line: '#7A4B58',
+    hand: '#766058',
+  },
+};
+
+const BABY_EYE = '#77D858';
+const BABY_EYE_DARK = '#3E4A2B';
+
+function milkBabyBodyPath(ctx: CanvasRenderingContext2D, r: number): void {
+  ctx.beginPath();
+  ctx.moveTo(-r * 0.36, -r * 1.0);
+  ctx.bezierCurveTo(-r * 0.62, -r * 1.04, -r * 0.76, -r * 0.82, -r * 0.8, -r * 0.56);
+  ctx.bezierCurveTo(-r * 0.94, -r * 0.16, -r * 0.92, r * 0.34, -r * 0.76, r * 0.6);
+  ctx.bezierCurveTo(-r * 0.6, r * 0.84, -r * 0.32, r * 0.9, 0, r * 0.9);
+  ctx.bezierCurveTo(r * 0.32, r * 0.9, r * 0.6, r * 0.84, r * 0.76, r * 0.6);
+  ctx.bezierCurveTo(r * 0.92, r * 0.34, r * 0.94, -r * 0.16, r * 0.8, -r * 0.56);
+  ctx.bezierCurveTo(r * 0.76, -r * 0.82, r * 0.62, -r * 1.04, r * 0.36, -r * 1.0);
+  ctx.closePath();
+}
+
+function drawMilkBaby(ctx: CanvasRenderingContext2D, options: FrogOptions): void {
+  const {
+    x,
+    y,
+    r,
+    scaleX = 1,
+    scaleY = 1,
+    angle = 0,
+    lookX = 0,
+    lookY = 0,
+    shadow = false,
+    flash = 0,
+    alpha = 1,
+  } = options;
+  const kind: BabyLook = options.type === 'matcha' || options.type === 'strawberry' ? options.type : 'cream';
+  const palette = BABY_PALETTES[kind];
+  const expression = options.expression ?? 'normal';
+  const blink = options.blink ?? false;
+  const lw = Math.max(1.6, r * 0.06);
+
+  ctx.save();
+  ctx.globalAlpha *= alpha;
+  ctx.translate(x, y);
+
+  if (shadow) {
+    ctx.fillStyle = 'rgba(60, 40, 24, 0.16)';
+    ctx.beginPath();
+    ctx.ellipse(0, r * 1.52, r * 0.62, r * 0.15, 0, 0, TAU);
+    ctx.fill();
+  }
+
+  ctx.rotate(angle);
+  ctx.scale(scaleX, scaleY);
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+
+  ctx.strokeStyle = palette.line;
+  ctx.lineWidth = r * 0.31;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(side * r * 0.24, r * 0.62);
+    ctx.quadraticCurveTo(side * r * 0.36, r * 1.08, side * r * 0.52, r * 1.46);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = palette.body;
+  ctx.lineWidth = r * 0.24;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(side * r * 0.24, r * 0.62);
+    ctx.quadraticCurveTo(side * r * 0.36, r * 1.08, side * r * 0.52, r * 1.46);
+    ctx.stroke();
+  }
+  for (const side of [-1, 1]) {
+    ctx.save();
+    ctx.translate(side * r * 0.55, r * 1.47);
+    ctx.rotate(side * 0.08);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r * 0.2, r * 0.1, 0, 0, TAU);
+    ctx.fillStyle = palette.body;
+    ctx.fill();
+    ctx.strokeStyle = palette.line;
+    ctx.lineWidth = lw * 0.55;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  const bodyGradient = ctx.createRadialGradient(-r * 0.3, -r * 0.62, r * 0.08, 0, r * 0.05, r * 1.22);
+  bodyGradient.addColorStop(0, palette.body);
+  bodyGradient.addColorStop(0.62, palette.body);
+  bodyGradient.addColorStop(1, palette.shade);
+  milkBabyBodyPath(ctx, r);
+  ctx.fillStyle = bodyGradient;
+  ctx.fill();
+  ctx.strokeStyle = palette.line;
+  ctx.lineWidth = lw * 1.2;
+  ctx.stroke();
+
+  ctx.save();
+  milkBabyBodyPath(ctx, r);
+  ctx.clip();
+  const bellyGradient = ctx.createRadialGradient(0, r * 0.1, r * 0.05, 0, r * 0.42, r * 0.78);
+  bellyGradient.addColorStop(0, palette.belly);
+  bellyGradient.addColorStop(0.78, palette.belly);
+  bellyGradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+  ctx.beginPath();
+  ctx.ellipse(0, r * 0.38, r * 0.6, r * 0.58, 0, 0, TAU);
+  ctx.fillStyle = bellyGradient;
+  ctx.fill();
+  ctx.restore();
+
+  ctx.strokeStyle = palette.line;
+  ctx.lineWidth = r * 0.2;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(side * r * 0.68, r * 0.05);
+    ctx.quadraticCurveTo(side * r * 0.78, r * 0.34, side * r * 0.6, r * 0.54);
+    ctx.stroke();
+  }
+  ctx.strokeStyle = palette.body;
+  ctx.lineWidth = r * 0.15;
+  for (const side of [-1, 1]) {
+    ctx.beginPath();
+    ctx.moveTo(side * r * 0.68, r * 0.05);
+    ctx.quadraticCurveTo(side * r * 0.78, r * 0.34, side * r * 0.6, r * 0.54);
+    ctx.stroke();
+  }
+  for (const side of [-1, 1]) {
+    ctx.save();
+    ctx.translate(side * r * 0.57, r * 0.56);
+    ctx.rotate(side * 0.26);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r * 0.155, r * 0.12, 0, 0, TAU);
+    ctx.fillStyle = palette.hand;
+    ctx.fill();
+    ctx.strokeStyle = palette.line;
+    ctx.lineWidth = lw * 0.55;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.07, -r * 0.02);
+    ctx.lineTo(r * 0.02, -r * 0.035);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.22)';
+    ctx.lineWidth = lw * 0.4;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  ctx.beginPath();
+  ctx.ellipse(-r * 0.34, -r * 0.54, r * 0.2, r * 0.1, -0.6, 0, Math.PI);
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.42)';
+  ctx.lineWidth = lw * 1.2;
+  ctx.stroke();
+
+  const eyeY = -r * 0.6;
+  const eyeX = r * 0.34;
+  const eyeR = r * 0.225;
+
+  for (const side of [-1, 1]) {
+    const cx = side * eyeX;
+    if (blink) {
+      ctx.beginPath();
+      ctx.arc(cx, eyeY, eyeR * 0.86, Math.PI * 1.12, Math.PI * 1.88);
+      ctx.strokeStyle = palette.line;
+      ctx.lineWidth = lw * 1.25;
+      ctx.stroke();
+      continue;
+    }
+    ctx.beginPath();
+    ctx.arc(cx, eyeY, eyeR, 0, TAU);
+    ctx.fillStyle = BABY_EYE;
+    ctx.fill();
+    ctx.strokeStyle = BABY_EYE_DARK;
+    ctx.lineWidth = lw * 0.55;
+    ctx.stroke();
+
+    const px = cx + lookX * eyeR * 0.34;
+    const py = eyeY + lookY * eyeR * 0.34;
+    ctx.beginPath();
+    ctx.arc(px, py, eyeR * 0.47, 0, TAU);
+    ctx.fillStyle = '#1D211B';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(px - eyeR * 0.16, py - eyeR * 0.18, eyeR * 0.15, 0, TAU);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.93)';
+    ctx.fill();
+
+    if (expression === 'determined') {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, eyeY, eyeR * 1.04, Math.PI * 1.03, Math.PI * 1.97);
+      ctx.lineTo(cx + eyeR, eyeY - eyeR * 0.15);
+      ctx.lineTo(cx - eyeR, eyeY - eyeR * 0.15);
+      ctx.closePath();
+      ctx.fillStyle = palette.body;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  ctx.strokeStyle = palette.line;
+  ctx.lineWidth = lw * 0.9;
+  ctx.lineCap = 'round';
+  if (expression === 'happy') {
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.16, -r * 0.22);
+    ctx.quadraticCurveTo(0, -r * 0.06, r * 0.16, -r * 0.22);
+    ctx.stroke();
+  } else if (expression === 'determined') {
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.12, -r * 0.16);
+    ctx.lineTo(r * 0.12, -r * 0.16);
+    ctx.stroke();
+  } else if (expression === 'hurt') {
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.12, -r * 0.14);
+    ctx.lineTo(r * 0.12, -r * 0.24);
+    ctx.stroke();
+  } else {
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.12, -r * 0.18);
+    ctx.quadraticCurveTo(0, -r * 0.08, r * 0.12, -r * 0.18);
+    ctx.stroke();
+  }
+
+  if (flash > 0) {
+    ctx.save();
+    milkBabyBodyPath(ctx, r);
+    ctx.fillStyle = `rgba(255, 255, 255, ${Math.min(0.65, flash * 0.65)})`;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  ctx.restore();
+}
+
 export function drawFrog(ctx: CanvasRenderingContext2D, options: FrogOptions): void {
+  if (!options.enemy) {
+    drawMilkBaby(ctx, options);
+    return;
+  }
+
   const {
     x,
     y,

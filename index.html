@@ -4,22 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#f6edd7" />
-    <meta name="description" content="奶蛙弹射：拖拽奶蛙，弹飞黑糖蛙！一个用 TypeScript + Canvas + Matter.js 制作的弹弓物理小游戏。" />
+    <meta name="description" content="奶娃弹射：拖拽奶娃，弹飞黑糖蛙！一个用 TypeScript + Canvas + Matter.js 制作的弹弓物理小游戏。" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <title>奶蛙弹射 · Milk Frog Slingshot</title>
+    <title>奶娃弹射 · Milk Baby Slingshot</title>
   </head>
   <body>
     <div class="rotate-hint" id="rotateHint">
       <div class="rotate-card">
         <div class="rotate-phone" aria-hidden="true"></div>
         <h2>请横屏游玩</h2>
-        <p>奶蛙已经架好弹弓，旋转手机就能出发。</p>
+        <p>奶娃已经架好弹弓，旋转手机就能出发。</p>
       </div>
     </div>
     <div id="app">
       <div class="stage-wrap">
         <div class="stage menu-open" id="stage">
-          <canvas id="game" width="1280" height="720" aria-label="奶蛙弹射游戏画面"></canvas>
+          <canvas id="game" width="1280" height="720" aria-label="奶娃弹射游戏画面"></canvas>
 
           <div class="hud" id="hud">
             <div class="hud-left">
@@ -55,15 +55,15 @@
             </div>
           </div>
 
-          <div class="hint-pill" id="hintPill">拖拽奶蛙 · 松手发射</div>
+          <div class="hint-pill" id="hintPill">拖拽奶娃 · 松手发射</div>
           <div class="toast" id="toast" aria-live="polite"></div>
 
           <div class="overlay" id="startScreen">
             <div class="modal start-modal">
               <div class="brand">
-                <div class="eyebrow">MILK FROG SLINGSHOT</div>
-                <h1>奶蛙弹射</h1>
-                <p class="tagline">拉满弹弓，把黑糖蛙统统弹飞！</p>
+                <div class="eyebrow">MILK BABY SLINGSHOT</div>
+                <h1>奶娃弹射</h1>
+                <p class="tagline">奶娃出马，黑糖蛙统统弹飞！</p>
               </div>
 
               <div class="mascot-wrap">
@@ -75,7 +75,7 @@
               </div>
 
               <div class="level-strip" id="levelStrip"></div>
-              <p class="howto">拖拽奶蛙瞄准 · 松手发射 · 空中轻点释放专属技能</p>
+              <p class="howto">拖拽奶娃瞄准 · 松手发射 · 空中轻点释放专属技能</p>
             </div>
           </div>
 
@@ -83,7 +83,7 @@
             <div class="modal small-modal">
               <div class="eyebrow">PAUSED</div>
               <h2>歇一会儿</h2>
-              <p class="modal-copy">奶蛙正在弹弓上打盹。</p>
+              <p class="modal-copy">奶娃正在弹弓上打盹。</p>
               <div class="actions vertical">
                 <button class="btn primary" id="resumeBtn" type="button">继续游戏</button>
                 <button class="btn ghost" id="pauseRetryBtn" type="button">重新开始</button>

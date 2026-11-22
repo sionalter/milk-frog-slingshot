@@ -22,8 +22,8 @@ const SKILL_NAMES: Record<BirdType, string> = {
 };
 
 const STARS_FOR_NOTE: Record<number, string> = {
-  3: '完美！奶蛙军团凯旋，连弹弓都在发光。',
-  2: '漂亮！还有奶蛙在弹弓上待命呢。',
+  3: '完美！奶娃军团凯旋，连弹弓都在发光。',
+  2: '漂亮！还有奶娃在弹弓上待命呢。',
   1: '惊险过关！下一关把角度再调稳一点。',
 };
 
@@ -207,7 +207,7 @@ function updateLevelLabel(index: number): void {
 const callbacks: GameCallbacks = {
   onScore: (value) => setScore(value),
   onBirds: (_remaining, current) => {
-    if (current) setHint('拖拽奶蛙 · 松手发射');
+    if (current) setHint('拖拽奶娃 · 松手发射');
     else setHint(null);
   },
   onSkill: (available, type) => {
@@ -294,7 +294,7 @@ function showResult(win: boolean, result: GameResult): void {
   const isLast = game.currentLevelIndex >= LEVELS.length - 1;
   resultNote.textContent = win
     ? isLast
-      ? '全部关卡通关！奶蛙守护了整片草地。'
+      ? '全部关卡通关！奶娃守护了整片草地。'
       : STARS_FOR_NOTE[result.stars] ?? ''
     : '黑糖蛙还在偷笑，换个角度再试试。';
   nextBtn.classList.toggle('hidden', !win || isLast);
@@ -435,12 +435,12 @@ function drawMascotFrame(now: number): void {
 
   ctx.fillStyle = 'rgba(96, 68, 42, 0.13)';
   for (const [x, y, rx] of [
-    [310, 262, 82],
-    [186, 264, 48],
-    [438, 266, 48],
+    [310, 280, 55],
+    [186, 278, 38],
+    [438, 280, 38],
   ]) {
     ctx.beginPath();
-    ctx.ellipse(x, y, rx, 12, 0, 0, TAU);
+    ctx.ellipse(x, y, rx, 10, 0, 0, TAU);
     ctx.fill();
   }
 
@@ -451,8 +451,8 @@ function drawMascotFrame(now: number): void {
 
   drawFrog(ctx, {
     x: 186,
-    y: 214 + bobLeft,
-    r: 46,
+    y: 210 + bobLeft,
+    r: 44,
     type: 'matcha',
     expression: 'happy',
     lookX: 0.6,
@@ -461,8 +461,8 @@ function drawMascotFrame(now: number): void {
   });
   drawFrog(ctx, {
     x: 438,
-    y: 216 + bobRight,
-    r: 46,
+    y: 212 + bobRight,
+    r: 44,
     type: 'strawberry',
     expression: 'happy',
     lookX: -0.6,
@@ -471,8 +471,8 @@ function drawMascotFrame(now: number): void {
   });
   drawFrog(ctx, {
     x: 310,
-    y: 176 + bobMain,
-    r: 78,
+    y: 170 + bobMain,
+    r: 72,
     type: 'cream',
     expression: 'happy',
     lookX: 0.18,

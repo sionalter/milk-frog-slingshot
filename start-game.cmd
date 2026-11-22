@@ -14,5 +14,5 @@ if not exist ".tools\node\npm.cmd" (
 )
 
 set "PATH=%~dp0.tools\node;%PATH%"
-echo Starting Milk Frog Slingshot...
+echo Starting Milk Baby Slingshot...
 call ".tools\node\npm.cmd" run dev -- --open
