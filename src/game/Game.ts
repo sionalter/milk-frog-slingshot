@@ -961,20 +961,20 @@ export class Game {
     const spacing = 27;
     const width = count * spacing + 40;
     const x = 20;
-    const y = 654;
+    const y = 650;
     ctx.save();
     ctx.globalAlpha = 0.94;
     ctx.fillStyle = 'rgba(255, 250, 238, 0.62)';
     ctx.strokeStyle = 'rgba(92, 69, 51, 0.22)';
     ctx.lineWidth = 2;
-    roundRectPath(ctx, x, y, width, 50, 18);
+    roundRectPath(ctx, x, y, width, 56, 20);
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = '#7C6550';
     ctx.font = '800 11px "Baloo 2", "Microsoft YaHei", sans-serif';
     ctx.textAlign = 'left';
     ctx.textBaseline = 'middle';
-    ctx.fillText('待发射', x + 14, y + 11);
+    ctx.fillText('待发射', x + 14, y + 10);
     for (let i = 0; i < count; i += 1) {
       const bob = Math.sin(this.time * 3 + i * 0.9) * 1.6;
       drawFrog(ctx, {

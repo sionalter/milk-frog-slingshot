@@ -507,7 +507,7 @@ h2 {
 
 #mascot {
   display: block;
-  height: clamp(120px, 20vh, 195px);
+  height: clamp(140px, 24vh, 222px);
   width: auto;
   max-width: 100%;
 }

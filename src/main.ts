@@ -435,9 +435,9 @@ function drawMascotFrame(now: number): void {
 
   ctx.fillStyle = 'rgba(96, 68, 42, 0.13)';
   for (const [x, y, rx] of [
-    [310, 280, 55],
-    [186, 278, 38],
-    [438, 280, 38],
+    [310, 288, 52],
+    [186, 282, 35],
+    [438, 284, 35],
   ]) {
     ctx.beginPath();
     ctx.ellipse(x, y, rx, 10, 0, 0, TAU);
@@ -451,8 +451,8 @@ function drawMascotFrame(now: number): void {
 
   drawFrog(ctx, {
     x: 186,
-    y: 210 + bobLeft,
-    r: 44,
+    y: 200 + bobLeft,
+    r: 42,
     type: 'matcha',
     expression: 'happy',
     lookX: 0.6,
@@ -461,8 +461,8 @@ function drawMascotFrame(now: number): void {
   });
   drawFrog(ctx, {
     x: 438,
-    y: 212 + bobRight,
-    r: 44,
+    y: 202 + bobRight,
+    r: 42,
     type: 'strawberry',
     expression: 'happy',
     lookX: -0.6,
@@ -471,8 +471,8 @@ function drawMascotFrame(now: number): void {
   });
   drawFrog(ctx, {
     x: 310,
-    y: 170 + bobMain,
-    r: 72,
+    y: 158 + bobMain,
+    r: 68,
     type: 'cream',
     expression: 'happy',
     lookX: 0.18,
